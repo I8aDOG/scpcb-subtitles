@@ -956,7 +956,7 @@ Function UpdateMainMenu()
 					;[End Block]
 				ElseIf MainMenuTab = 7 ;Advanced
 					;[Block]
-					height = (355 + (CurrFrameLimit > 0.0) * 30) * MenuScale
+					height = (325 + (CurrFrameLimit > 0.0) * 30) * MenuScale
 					DrawFrame(x, y, width, height)	
 					
 					y = y + 20*MenuScale
@@ -975,15 +975,6 @@ Function UpdateMainMenu()
 					CanOpenConsole = DrawTick(x + 310 * MenuScale, y + MenuScale, CanOpenConsole)
 					If MouseOn(x+310*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale) And OnSliderID=0
 						DrawOptionsTooltip(tx,ty,tw,th,"consoleenable")
-					EndIf
-					
-					y = y + 30*MenuScale
-					
-					Color 255,255,255
-					Text(x + 20 * MenuScale, y, I_Loc\OptionName_Consoleerror)
-					ConsoleOpening = DrawTick(x + 310 * MenuScale, y + MenuScale, ConsoleOpening)
-					If MouseOn(x+310*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale) And OnSliderID=0
-						DrawOptionsTooltip(tx,ty,tw,th,"consoleerror")
 					EndIf
 
 					y = y + 30*MenuScale
@@ -2506,8 +2497,6 @@ Function DrawOptionsTooltip(x%,y%,width%,height%,option$,value#=0,ingame%=False)
 			txt = Format(I_Loc\OptionTooltip_Console, KeyName(KEY_CONSOLE))
 			R = 255
 			txt2 = I_Loc\OptionTooltip_ConsoleNote
-		Case "consoleerror"
-			txt = Format(I_Loc\Option_HintSelfexplanatory, I_Loc\OptionName_Consoleerror)
 		Case "speedrunmode"
 			txt = I_Loc\OptionTooltip_Speedrunmode
 		Case "numericseeds"
