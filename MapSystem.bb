@@ -158,6 +158,7 @@ Function FreeTextureCache()
 End Function
 
 Function LoadRMesh(file$,rt.RoomTemplates)
+	Local path$ = StripFilename(file)
 	file = DetermineModdedPath(file)
 
 	CatchErrors("Uncaught (LoadRMesh " + Chr(34) + file + Chr(34) + ")")
@@ -200,10 +201,6 @@ Function LoadRMesh(file$,rt.RoomTemplates)
 		Default RuntimeErrorExt Chr(34)+file+Chr(34)+" is Not RMESH ("+isRMesh+")"
 	End Select
 	
-	file=StripFilename(file)
-	; Modded rooms must try loading textures starting from the vanilla root.
-	If Left(file, 5) = "Mods\" Then file = Right(file, Len(file) - Instr(file, "\", 6))
-	
 	Local count%,count2%
 	
 	Local obj%=CreatePivot()
@@ -220,13 +217,13 @@ Function LoadRMesh(file$,rt.RoomTemplates)
 	Local u#,v#
 	
 	For i=1 To count ;drawn mesh
-		EntityParent ReadMesh(f, blankTexture, Alpha, Opaque), collisionMeshes
+		EntityParent ReadMesh(path, f, blankTexture, Alpha, Opaque), collisionMeshes
 	Next
 	
 	If version >= 0 Then
 		Local noCollCount% = ReadInt(f)
 		For i=1 To noCollCount
-			ReadMesh(f, blankTexture, Alpha, Opaque, False)
+			ReadMesh(path, f, blankTexture, Alpha, Opaque, False)
 		Next
 	EndIf
 
@@ -535,7 +532,7 @@ Function LoadRMesh(file$,rt.RoomTemplates)
 	
 End Function
 
-Function ReadMesh%(f%, blankTexture%, Alpha%, Opaque%, coll% = True)
+Function ReadMesh%(file$, f%, blankTexture%, Alpha%, Opaque%, coll% = True)
 	Local childMesh=CreateMesh()
 	
 	Local surf=CreateSurface(childMesh)
@@ -554,9 +551,9 @@ Function ReadMesh%(f%, blankTexture%, Alpha%, Opaque%, coll% = True)
 			If tex[j]=0 Then ;texture is not in cache
 				Select True
 					Case temp1i<3
-						tex[j]=LoadModdedTextureNonStrict("GFX\map\"+temp1s,1)
+						tex[j]=LoadModdedTextureNonStrict(file+temp1s,1)
 					Default
-						tex[j]=LoadModdedTextureNonStrict("GFX\map\"+temp1s,3)
+						tex[j]=LoadModdedTextureNonStrict(file+temp1s,3)
 				End Select
 				
 				If tex[j]<>0 Then
