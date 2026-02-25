@@ -5667,7 +5667,8 @@ Function UpdateRooms()
 		EndIf
 	Next
 	
-	MapFound(Floor(EntityX(PlayerRoom\obj) / 8.0), Floor(EntityZ(PlayerRoom\obj) / 8.0)) = 1
+	Local mapX = Floor(EntityX(PlayerRoom\obj) / 8.0), mapZ = Floor(EntityZ(PlayerRoom\obj) / 8.0)
+	If mapX <= MapWidth And mapZ <= MapHeight Then MapFound(mapX, mapZ) = 1
 	PlayerRoom\found = True
 	
 	TempLightVolume = Max(TempLightVolume / 4.5, 1.0)
