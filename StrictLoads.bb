@@ -17,10 +17,11 @@ Global ModelExtensions$[ModelExtensionCount]
 ModelExtensions[0] = "b3d"
 ModelExtensions[1] = "x"
 
-Const SoundExtensionCount = 2
+Const SoundExtensionCount = 3
 Global SoundExtensions$[SoundExtensionCount]
 SoundExtensions[0] = "ogg"
 SoundExtensions[1] = "wav"
+SoundExtensions[2] = "mp3"
 
 ;basic wrapper functions that check to make sure that the file exists before attempting to load it, raises an RTE if it doesn't
 ;more informative alternative to MAVs outside of debug mode, makes it immiediately obvious whether or not someone is loading resources
