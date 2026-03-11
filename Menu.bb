@@ -1905,7 +1905,8 @@ Function LoadLoadingScreens(file$)
 	CloseFile f
 End Function
 
-
+Global LoadingScreenCHN% = 0
+Global LoadingScreenCWM% = 0
 
 Function DrawLoading(percent%, shortloading=False)
 	
@@ -1980,11 +1981,15 @@ Function DrawLoading(percent%, shortloading=False)
 			If Not shortloading Then 
 				If firstloop Then 
 					If percent = 0 Then
-						PlaySound_Strict LoadTempSound("SFX\SCP\990\cwm1.cwm")
-					ElseIf percent = 100
-						PlaySound_Strict LoadTempSound("SFX\SCP\990\cwm2.cwm")
+						LoadingScreenCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\990\cwm1.cwm"))
+						LoadingScreenCWM = 0
 					EndIf
 				EndIf
+			EndIf
+
+			If (Not shortloading) And percent = 100 And (Not ChannelPlaying(LoadingScreenCHN)) And LoadingScreenCWM = 0
+				LoadingScreenCHN = PlaySound_Strict(LoadTempSound("SFX\SCP\990\cwm2.cwm"))
+				LoadingScreenCWM = 1
 			EndIf
 			
 			SetFont Font2
